@@ -37,7 +37,7 @@ namespace viewer {
         data_format_str.resize(data_format_str.size() / 4);
         data_format.parse(data_format_str);
 
-        std::cout << "INFO: Data format " << data_format.to_string() << std::endl;
+        std::cout << "Data format " << data_format.to_string() << std::endl;
 
         scale = torch::empty(
                 {3},
@@ -51,8 +51,8 @@ namespace viewer {
                     (float) *npz["invradius"].data<double>();
         }
 
-        printf("INFO: Scale %f %f %f\n", scale[0].item().toFloat(),
-               scale[1].item().toFloat(), scale[2].item().toFloat());
+        std::cout << "Scale: " << scale[0].item().toFloat() << " " << scale[1].item().toFloat() << " "
+                  << scale[2].item().toFloat() << std::endl;
 
         offset = torch::empty(
                 {3},
@@ -60,6 +60,18 @@ namespace viewer {
 
         const float *offset_data = npz["offset"].data<float>();
         for (int i = 0; i < 3; ++i) offset[i] = offset_data[i];
+
+        std::cout << "Offset: " << offset[0].item().toFloat() << " " << offset[1].item().toFloat() << " "
+                  << offset[2].item().toFloat() << std::endl;
+
+        auto radius = 0.5 / scale;
+        auto center = radius * (1 - 2 * offset);
+        auto range_min = center - radius;
+        auto range_max = center + radius;
+
+        std::cout << "Range: [" << range_min[0].item().toFloat() << ", " << range_min[1].item().toFloat() << ", "
+                  << range_min[2].item().toFloat() << "], [" << range_max[0].item().toFloat() << ", "
+                  << range_max[1].item().toFloat() << ", " << range_max[2].item().toFloat() << "]" << std::endl;
 
         cnpy::NpyArray &child_node = npz["child"];
 
@@ -89,7 +101,7 @@ namespace viewer {
         }
 
         if (npz.count("quant_colors")) {
-            std::cout << "INFO: Decoding quantized colors" << std::endl;
+            std::cout << "Decoding quantized colors" << std::endl;
             auto &quant_colors_node = npz["quant_colors"];
 
             if (quant_colors_node.word_size != 2) {
@@ -182,7 +194,7 @@ namespace viewer {
             throw std::runtime_error("data and child sizes not aligned");
         }
 
-        std::cout << "INFO: Data size: " << data.size(0) << std::endl;
+        std::cout << "Data size: " << data.size(0) << std::endl;
         capacity = data.size(0);
     }
 
@@ -323,7 +335,7 @@ namespace viewer {
         packed /= N;
         int i = packed % N;
         packed /= N;
-        return std::tuple<int, int, int, int>{packed, i, j, k};
+        return std::tuple < int, int, int, int > {packed, i, j, k};
     }
 
 }  // namespace viewer
