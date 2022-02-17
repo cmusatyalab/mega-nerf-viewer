@@ -69,6 +69,12 @@ namespace viewer {
         auto range_min = center - radius;
         auto range_max = center + radius;
 
+        std::cout << "Center: [" << center[0].item().toFloat() << ", " << center[1].item().toFloat() << ", "
+                  << center[2].item().toFloat() << "]" << std::endl;
+
+        std::cout << "Radius: [" << radius[0].item().toFloat() << ", " << radius[1].item().toFloat() << ", "
+                  << radius[2].item().toFloat() << "]" << std::endl;
+
         std::cout << "Range: [" << range_min[0].item().toFloat() << ", " << range_min[1].item().toFloat() << ", "
                   << range_min[2].item().toFloat() << "], [" << range_max[0].item().toFloat() << ", "
                   << range_max[1].item().toFloat() << ", " << range_max[2].item().toFloat() << "]" << std::endl;
