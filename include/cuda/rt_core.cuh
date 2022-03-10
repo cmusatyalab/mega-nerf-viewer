@@ -539,11 +539,11 @@ namespace viewer {
                             }
 
                             grid_1 = (int) fmax(
-                                    fmin((samples[sample_index][*num_samples][1] - min_position[1]) / range[1] *
+                                    fmin((samples[sample_index][*num_samples][2] - min_position[1]) / range[1] *
                                          grid_dim[0], grid_dim[0] - 1.0f), 0.0f);
 
                             grid_2 = (int) fmax(
-                                    fmin((samples[sample_index][*num_samples][2] - min_position[2]) / range[2] *
+                                    fmin((samples[sample_index][*num_samples][3] - min_position[2]) / range[2] *
                                          grid_dim[1], grid_dim[1] - 1.0f), 0.0f);
 
                             cluster_indices[sample_index][*num_samples] = grid_1 * grid_dim[1] + grid_2;
